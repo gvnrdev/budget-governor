@@ -1,0 +1,47 @@
+{
+	"name": "budget-governor",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-05-16",
+	"compatibility_flags": ["nodejs_compat"],
+	"observability": {
+		"enabled": true,
+	},
+	"durable_objects": {
+		"bindings": [{ "name": "ACCOUNT", "class_name": "AccountState" }],
+	},
+	"migrations": [
+		{ "tag": "v1", "new_sqlite_classes": ["AccountState"] },
+	],
+	"kv_namespaces": [
+		{
+			"binding": "BUDGET_KV",
+			"id": "c930f28459634846895869eb7de7dae8",
+			"preview_id": "2ec0b390f49f4503b86820b9e5a6cc1a",
+		},
+	],
+	"vars": {
+		"PAYTO_ADDRESS": "0xBcF326ff22CDEc10Ca4F8AE9415Bb6884a0c26D3",
+		"X402_NETWORK": "eip155:8453",
+		"BASE_RPC_FALLBACK_URL": "https://base.publicnode.com",
+	},
+	"unsafe": {
+		"bindings": [
+			{
+				"name": "ACCOUNT_RATE_LIMITER",
+				"type": "ratelimit",
+				"namespace_id": "1001",
+				"simple": { "limit": 10, "period": 3600 },
+			},
+			{
+				"name": "APPROVAL_RATE_LIMITER",
+				"type": "ratelimit",
+				"namespace_id": "1002",
+				"simple": { "limit": 30, "period": 60 },
+			},
+		],
+	},
+	"routes": [
+		{ "pattern": "gvnr.dev", "custom_domain": true },
+		{ "pattern": "www.gvnr.dev", "custom_domain": true },
+	],
+}
